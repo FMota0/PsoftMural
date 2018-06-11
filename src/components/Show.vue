@@ -3,14 +3,14 @@
     <v-text-field
       label="Pesquise a mensagem pelo titulo"
       color="black"
+      v-model="patternToMatch"
     >
-
     </v-text-field>
 
     <v-layout collum>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
-          <v-flex v-for="message in messages">
+          <v-flex v-for="message in matchingMessages()">
             <v-card>
               <v-card-title primary-title>
                 <h2> {{message.title}} </h2>
@@ -33,7 +33,8 @@
 export default {
   data () {
     return {
-      messages: []
+      messages: [],
+      patternToMatch: ''
     }
   },
   methods: {
@@ -46,6 +47,12 @@ export default {
     },
     timeFromNow: function(message) {
       return moment(message.created_at).fromNow();
+    },
+    matchingMessages: function() {
+      let regex = new RegExp("^" + this.patternToMatch, 'i');
+      return this.messages.filter(function (message) {
+        return regex.test(message.title);
+      });
     }
   },
   created: function () {

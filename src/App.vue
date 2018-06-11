@@ -16,7 +16,6 @@
       </v-btn>
     </v-toolbar>
 
-
     <v-content>
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
@@ -29,7 +28,7 @@
 
 
     <v-footer :fixed="fixed" app>
-      
+
     </v-footer>
   </v-app>
 </template>
