@@ -14,6 +14,9 @@
             <v-card>
               <v-card-title primary-title>
                 <h2> {{message.title}} </h2>
+                <v-spacer>
+                </v-spacer>
+                <h3> {{message.id}} </h3>
               </v-card-title>
               <v-card-title>
                 <p> {{message.author + ' , ' + timeFromNow(message)}} </p>
