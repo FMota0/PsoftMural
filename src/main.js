@@ -9,11 +9,16 @@ Vue.use(VueResource)
 
 let store = {
   user: {
+    isLogged: false,
     login: '',
     password: ''
   },
   messages: [],
-  firstLoad: false
+  firstLoad: false,
+  notificationStatus: {
+    succ: false,
+    error: false
+  }
 };
 
 new Vue({

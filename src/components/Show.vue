@@ -1,13 +1,22 @@
 <template>
   <v-container>
+    <v-toolbar>
+
+      <v-spacer>
+      </v-spacer>
+      <v-btn @click.stop="loadMessages()">
+        <v-icon>
+          cached
+        </v-icon>
+      </v-btn>
+    </v-toolbar>
     <v-text-field
       label="Pesquise a mensagem pelo titulo"
       color="black"
       v-model="patternToMatch"
+      md6
     >
     </v-text-field>
-
-    <p> {{this.$root.$data.getCounter }} </p>
 
     <v-layout collum>
       <v-container fluid grid-list-md>
