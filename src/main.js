@@ -7,7 +7,23 @@ import 'vuetify/dist/vuetify.css'
 Vue.use(Vuetify)
 Vue.use(VueResource)
 
+let store = {
+  user: {
+    login: '',
+    password: ''
+  },
+  messages: [],
+  firstLoad: false
+};
+
 new Vue({
   el: '#app',
-  render: h => h(App)
+  data: store,
+  render: h => h(App),
+  methods: {
+
+  },
+  created: function () {
+
+  }
 })

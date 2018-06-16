@@ -7,6 +7,8 @@
     >
     </v-text-field>
 
+    <p> {{this.$root.$data.getCounter }} </p>
+
     <v-layout collum>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
@@ -36,30 +38,32 @@
 export default {
   data () {
     return {
-      messages: [],
       patternToMatch: ''
     }
   },
   methods: {
-    getMessages: function () {
+    loadMessages: function(){
       this.$http.get('http://150.165.85.16:9900/api/msgs').then(r => r.json())
       .then(function (x) {
-        this.messages = x;
-        this.messages.sort((a, b) => moment(b.created_at) - moment(a.created_at))
-      })
+        this.$root.$data.messages = x;
+        this.$root.$data.messages.sort((a, b) => moment(b.created_at) - moment(a.created_at))
+      });
     },
     timeFromNow: function(message) {
       return moment(message.created_at).fromNow();
     },
     matchingMessages: function() {
       let regex = new RegExp("^" + this.patternToMatch, 'i');
-      return this.messages.filter(function (message) {
+      return this.$root.$data.messages.filter(function (message) {
         return regex.test(message.title);
       });
     }
   },
   created: function () {
-    this.getMessages();
+    if(!this.$root.$data.firstLoad){
+      this.loadMessages();
+      this.$root.$data.firstLoad = true;
+    }
   }
 }
 </script>
