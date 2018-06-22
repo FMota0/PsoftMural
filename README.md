@@ -1,4 +1,4 @@
-# [psoftmural](http://muralpsoftvue.surge.sh/)
+# [psoftmural](http://psoftmuralvue.surge.sh/)
 
 > A simple frontend
 
