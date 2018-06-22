@@ -1,7 +1,6 @@
 <template>
   <v-container>
-    <v-toolbar>
-
+    <div>
       <v-spacer>
       </v-spacer>
       <v-btn @click.stop="loadMessages()">
@@ -9,7 +8,7 @@
           cached
         </v-icon>
       </v-btn>
-    </v-toolbar>
+    </div>
     <v-text-field
       label="Pesquise a mensagem pelo titulo"
       color="black"
@@ -44,6 +43,9 @@
 </template>
 
 <script>
+
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+
 export default {
   data () {
     return {
@@ -51,11 +53,24 @@ export default {
     }
   },
   methods: {
+    ...mapGetters([
+      'getMessages',
+      'isFirstLoad']),
+    ...mapMutations([
+      'setUserLogin',
+      'setUserPassword',
+      'setUserIsLogged',
+      'setMessages',
+      'setFirstLoad']),
+    ...mapActions([
+
+    ]),
     loadMessages: function(){
       this.$http.get('http://150.165.85.16:9900/api/msgs').then(r => r.json())
-      .then(function (x) {
-        this.$root.$data.messages = x;
-        this.$root.$data.messages.sort((a, b) => moment(b.created_at) - moment(a.created_at))
+      .then(function (messages) {
+        console.log('messages arrived');
+        messages.sort((a, b) => moment(b.created_at) - moment(a.created_at))
+        this.setMessages(messages);
       });
     },
     timeFromNow: function(message) {
@@ -63,15 +78,15 @@ export default {
     },
     matchingMessages: function() {
       let regex = new RegExp("^" + this.patternToMatch, 'i');
-      return this.$root.$data.messages.filter(function (message) {
+      return this.getMessages().filter(function (message) {
         return regex.test(message.title);
       });
     }
   },
   created: function () {
-    if(!this.$root.$data.firstLoad){
+    if(!this.isFirstLoad()){
       this.loadMessages();
-      this.$root.$data.firstLoad = true;
+      this.setFirstLoad(true);
     }
   }
 }

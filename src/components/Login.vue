@@ -65,6 +65,8 @@
 
 <script>
 
+import { mapMutations } from 'vuex'
+
 export default {
   components: {
 
@@ -92,6 +94,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setUserLogin',
+      'setUserPassword',
+      'setUserIsLogged'
+    ]),
     resetForm: function() {
       this.user.login = '';
       this.user.password = '';
@@ -99,9 +106,9 @@ export default {
       this.$refs.form.reset();
     },
     updateLoginData: function () {
-      this.$root.$data.user.isLogged = true;
-      this.$root.$data.user.login = this.user.login;
-      this.$root.$data.user.password = this.user.password;
+      this.setUserIsLogged(true);
+      this.setUserLogin(this.user.login);
+      this.setUserPassword(this.user.password);
     },
     login: function () {
       console.log('Login requested');

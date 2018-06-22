@@ -1,7 +1,7 @@
 <template>
   <v-container flat>
-    <v-flex fluid xs6 offset-xs3>
-      <v-container v-if="this.$root.$data.user.isLogged">
+    <v-flex fluid md6 offset-md3>
+      <v-container v-if="this.isUserLogged()">
         <v-form ref="form" @submit.prevent="submit">
 
           <v-snackbar
@@ -49,6 +49,7 @@
 <script>
 
 import Login from './Login'
+import {mapGetters} from 'vuex'
 
 export default {
   components: {
@@ -64,6 +65,11 @@ export default {
     }
   },
   methods: {
+      ...mapGetters([
+        'getUserLogin',
+        'getUserPassword',
+        'isUserLogged'
+      ]),
       resetForm: function () {
         this.$refs.form.reset();
       },
@@ -82,7 +88,7 @@ export default {
   computed: {
       sendMsg: function() {
         let snd = {
-          "credentials": this.$root.$data.user.login + ":" + this.$root.$data.user.password
+          "credentials": this.getUserLogin() + ":" + this.getUserPassword()
         };
         return JSON.stringify(snd);
       },
